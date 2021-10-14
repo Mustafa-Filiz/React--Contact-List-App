@@ -43,6 +43,7 @@ const FormComp = ({ contact, setContact, handleFormSubmit }) => {
                     name="name"
                     value={contact.name}
                     onChange={handleInputChange}
+                    required
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -58,6 +59,7 @@ const FormComp = ({ contact, setContact, handleFormSubmit }) => {
                     name="phone"
                     value={contact.phone}
                     onChange={handleInputChange}
+                    required
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -67,8 +69,8 @@ const FormComp = ({ contact, setContact, handleFormSubmit }) => {
                     }}
                 />
                 <ButtonGroup variant="contained" fullWidth>
-                    <Button type="submit">Add</Button>
-                    <Button type="submit" color="secondary" disabled>
+                    <Button type="submit" disabled={contact?.id ? true : false}>Add</Button>
+                    <Button type="submit" color="secondary" disabled={contact?.id ? false : true}>
                         Update
                     </Button>
                 </ButtonGroup>
