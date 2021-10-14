@@ -13,7 +13,7 @@ import {
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
 import React from 'react';
-import { useFetchContacts } from '../utils/Firebase';
+import { deleteContact, useFetchContacts } from '../utils/Firebase';
 
 const useStyles = makeStyles({
     contactList: {
@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     },
 });
 
-const ContactList = () => {
+const ContactList = ({ handleFormUpdate }) => {
     const classes = useStyles();
 
     const { contactList, loading } = useFetchContacts();
@@ -39,18 +39,23 @@ const ContactList = () => {
                 ) : (
                     contactList.map((contact) => {
                         return (
-                            <ListItem key={contact.id}
+                            <ListItem
+                                key={contact.id}
                                 secondaryAction={
                                     <Box>
                                         <IconButton
                                             edge="end"
                                             aria-label="edit"
+                                            onClick={() => handleFormUpdate(contact)}
                                         >
                                             <Edit color="success" />
                                         </IconButton>
                                         <IconButton
                                             edge="end"
                                             aria-label="delete"
+                                            onClick={() =>
+                                                deleteContact(contact.id)
+                                            }
                                         >
                                             <Delete color="error" />
                                         </IconButton>
