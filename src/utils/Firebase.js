@@ -9,6 +9,7 @@ import {
     update,
 } from 'firebase/database';
 import { useEffect, useState } from 'react';
+import { successToastify } from './Toastify';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyBGoVhzwHxbpl10TK-GJUvDTJ-dvwW1aXc',
@@ -50,6 +51,7 @@ export const useFetchContacts = () => {
 
 export const deleteContact = (id) => {
     remove(child(ref(database, 'contacts'), id));
+    successToastify("Contact deleted!")
 };
 
 export const updateContact = (contact) => {

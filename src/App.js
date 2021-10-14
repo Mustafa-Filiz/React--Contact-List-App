@@ -5,6 +5,8 @@ import './App.css';
 import ContactList from './components/ContactList';
 import FormComp from './components/FormComp';
 import { addContact, updateContact } from './utils/Firebase';
+import { ToastContainer } from 'react-toastify';
+import { successToastify } from './utils/Toastify';
 
 const useStyles = makeStyles({
     App: {
@@ -27,8 +29,10 @@ function App() {
         e.preventDefault();
         if(contact?.id){
           updateContact(contact)
+          successToastify("Contact updated!")
         }else{
           addContact(contact)
+          successToastify("Contact added!")
         }
         setContact(initialValues);
     };
@@ -46,6 +50,7 @@ function App() {
                 handleFormSubmit={handleFormSubmit}
             />
             <ContactList handleFormUpdate={handleFormUpdate} />
+            <ToastContainer />
         </Box>
     );
 }
