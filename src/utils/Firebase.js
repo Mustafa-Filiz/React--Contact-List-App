@@ -1,5 +1,13 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, push, onValue } from 'firebase/database';
+import {
+    getDatabase,
+    ref,
+    push,
+    onValue,
+    remove,
+    child,
+    update,
+} from 'firebase/database';
 import { useEffect, useState } from 'react';
 
 const firebaseConfig = {
@@ -21,10 +29,10 @@ export const addContact = (contact) => {
 
 export const useFetchContacts = () => {
     const [contactList, setContactList] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-      setLoading(true)
+        setLoading(true);
         const contactRef = ref(database, 'contacts');
         onValue(contactRef, (snapshot) => {
             const data = snapshot.val();
@@ -33,9 +41,17 @@ export const useFetchContacts = () => {
                 dataArr.push({ id, ...data[id] });
             }
             setContactList(dataArr);
-            setLoading(false)
+            setLoading(false);
         });
     }, []);
 
-    return {contactList, loading};
+    return { contactList, loading };
+};
+
+export const deleteContact = (id) => {
+    remove(child(ref(database, 'contacts'), id));
+};
+
+export const updateContact = (contact) => {
+    update(child(ref(database, 'contacts'), contact.id), contact);
 };
