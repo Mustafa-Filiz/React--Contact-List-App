@@ -4,7 +4,7 @@ import { useState } from 'react';
 import './App.css';
 import ContactList from './components/ContactList';
 import FormComp from './components/FormComp';
-import { addContact } from './utils/Firebase';
+import { addContact, updateContact } from './utils/Firebase';
 
 const useStyles = makeStyles({
     App: {
@@ -25,9 +25,17 @@ function App() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        addContact(contact)
+        if(contact?.id){
+          updateContact(contact)
+        }else{
+          addContact(contact)
+        }
         setContact(initialValues);
     };
+
+    const handleFormUpdate = (item) => {
+      setContact({...item})
+    }
 
     const classes = useStyles();
     return (
@@ -37,7 +45,7 @@ function App() {
                 setContact={setContact}
                 handleFormSubmit={handleFormSubmit}
             />
-            <ContactList />
+            <ContactList handleFormUpdate={handleFormUpdate} />
         </Box>
     );
 }
