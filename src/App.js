@@ -4,6 +4,7 @@ import { useState } from 'react';
 import './App.css';
 import ContactList from './components/ContactList';
 import FormComp from './components/FormComp';
+import { addContact } from './utils/Firebase';
 
 const useStyles = makeStyles({
     App: {
@@ -24,7 +25,7 @@ function App() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(contact);
+        addContact(contact)
         setContact(initialValues);
     };
 
